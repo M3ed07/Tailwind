@@ -5,18 +5,20 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LayoutComponent } from './layout/layout.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
-import { MapsComponent } from './pages/maps/maps.component';
-import { CompaniesComponent } from './pages/companies/companies.component';
 import { NavbarComponent } from './shared/components/navbar/navbar.component';
+import { TableComponent } from './shared/components/table/table.component';
+import { UsersComponent } from './pages/users/users.component';
+import { AttendanceComponent } from './pages/attendance/attendance.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LayoutComponent,
-    DashboardComponent,
-    MapsComponent,
-    CompaniesComponent,
     NavbarComponent,
+    TableComponent,
+    DashboardComponent,
+    UsersComponent,
+    AttendanceComponent,
   ],
   imports: [
     BrowserModule,

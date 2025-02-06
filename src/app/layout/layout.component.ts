@@ -9,8 +9,8 @@ export class LayoutComponent {
 
   menuItems = [
     { label: 'Dashboard', icon: 'fa-solid fa-gauge', path: 'dashboard' },
-    { label: 'Maps', icon: 'fa-solid fa-map', path: 'maps' },
-    { label: 'Companies', icon: 'fa-solid fa-building', path: 'companies' },
+    { label: 'Users', icon: 'fa-solid fa-users', path: 'users' },
+    { label: 'Attendance', icon: 'fa-solid fa-clipboard-user', path: 'attendance' },
   ];
 
 }
