@@ -1,0 +1,15 @@
+::ng-deep .p-checkbox-box{
+    @apply border
+}
+::ng-deep .p-paginator{
+    @apply bg-transparent
+}
+th ,td ,tr{
+    @apply text-darkBg dark:text-lightBg bg-transparent
+}
+.p-buttons{
+    @apply text-darkBg dark:text-lightBg px-2 rounded-lg flex items-center justify-center border-[0.1px] dark:border-[rgba(255,255,255,0.2)] hover:bg-darkText hover:bg-opacity-10 duration-100 ease-in-out cursor-pointer;
+  }
+::ng-deep .p-datatable-header{
+    @apply !bg-transparent
+  }  

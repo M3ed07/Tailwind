@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { TableData, TableHeader } from '../../core/models/user';
 
 @Component({
   selector: 'app-users',
@@ -7,4 +8,46 @@ import { Component } from '@angular/core';
 })
 export class UsersComponent {
   pageName = 'Users';
+
+  tableHeader: TableHeader[] = [
+    { field: 'fullName', header: 'Full Name', type: 'text' },
+    { field: 'gender', header: 'Gender', type: 'select', options: ['Male', 'Female', 'Other'] },
+    { field: 'birthdate', header: 'Birthdate', type: 'date' },
+    { field: 'address', header: 'Address', type: 'text' },
+    { field: 'phone', header: 'Phone Number', type: 'text' },
+    { field: 'username', header: 'Username', type: 'text' },
+    { field: 'password', header: 'Password', type: 'text' },
+    { field: 'rating', header: 'Rating', type: 'number' },
+    { field: 'group', header: 'Group', type: 'select', options: ['Admin', 'User', 'Guest'] },
+    { field: 'degree', header: 'Graduated', type: 'boolean' },
+  ];
+
+  tableData: TableData[] = [
+    {
+      id: 1,
+      fullName: 'John Doe',
+      gender: 'Male',
+      birthdate: '1990-05-15',
+      address: '123 Street, City',
+      phone: '555-1234',
+      username: 'johndoe',
+      password: 'password123',
+      rating: 4.5,
+      group: 'Admin',
+      degree: true,
+    },
+    {
+      id: 2,
+      fullName: 'Jane Smith',
+      gender: 'Female',
+      birthdate: '1995-10-22',
+      address: '456 Avenue, City',
+      phone: '555-5678',
+      username: 'janesmith',
+      password: 'password123',
+      rating: 4.8,
+      group: 'User',
+      degree: false,
+    },
+  ];
 }
