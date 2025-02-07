@@ -4,12 +4,24 @@
 ::ng-deep .p-paginator{
     @apply bg-transparent
 }
-th ,td ,tr{
-    @apply text-darkBg dark:text-lightBg bg-transparent
-}
+
 .p-buttons{
-    @apply text-darkBg dark:text-lightBg px-2 rounded-lg flex items-center justify-center border-[0.1px] dark:border-[rgba(255,255,255,0.2)] hover:bg-darkText hover:bg-opacity-10 duration-100 ease-in-out cursor-pointer;
+    @apply h-8 font-zain text-2xl px-2 rounded-lg flex items-center justify-center border-[0.1px] dark:border-[rgba(255,255,255,0.2)] hover:bg-darkText hover:bg-opacity-10 duration-100 ease-in-out cursor-pointer;
   }
 ::ng-deep .p-datatable-header{
-    @apply !bg-transparent
+    @apply !bg-transparent p-0
   }  
+
+  ::ng-deep .p-element{
+   @apply bg-transparent text-darkBg dark:text-lightBg
+  }
+  th ,td ,tr{
+    @apply bg-transparent text-darkBg dark:text-lightBg p-0
+  }
+  ::ng-deep .p-menu-list{
+    @apply border-[0.1px] dark:border-[rgba(255,255,255,0.2)] dark:bg-darkBg bg-lightBg rounded-lg
+  }
+
+  ::ng-deep .swal2-popup{
+   @apply border-[0.1px] dark:border-[rgba(255,255,255,0.2)] dark:bg-darkBg bg-lightBg text-darkBg dark:text-lightBg
+  }

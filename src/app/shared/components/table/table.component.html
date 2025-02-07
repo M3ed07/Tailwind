@@ -5,6 +5,7 @@
     [value]="tableData"
     [rows]="12"
     paginator="true"
+    styleClass="p-4 grid gap-8 font-zain text-xl"
     [globalFilterFields]="tableHeader"
     [(selection)]="selectAll"
     [rowHover]="true"
@@ -14,22 +15,22 @@
   
     <ng-template pTemplate="caption">
         <div class="flex gap-4 items-center">
-            <p-toolbar styleClass="!bg-transparent flex gap-4 justify-start p-0">
+            <p-toolbar styleClass="!bg-transparent flex gap-4 justify-start p-0 font-zain text-xl">
                 <p-button label="New" class="p-buttons" (onClick)="addNew()"></p-button>
                 <p-button label="Delete" class="p-buttons" [disabled]="!selectAll.length" (onClick)="deleteSelectedData()"></p-button>
             </p-toolbar>
             <span class="p-buttons gap-2 w-96">
                 <i class="pi pi-search"></i>
-                <input class="outline-none w-full bg-transparent" type="text" (input)="filterGlobal($event)" placeholder="Search..."/>
+                <input class="outline-none w-full bg-transparent text-darkBg dark:text-lightBg text-xl" type="text" (input)="filterGlobal($event)" placeholder="Search..."/>
             </span>
         </div>
     </ng-template>
   
       <ng-template pTemplate="header">
         <tr>
-          <th><p-tableHeaderCheckbox/></th>
-          <th *ngFor="let header of tableHeader" pSortableColumn="{{ header.field }}">
-           <div class="flex gap-2 items-center"><p-sortIcon field="{{ header.field }}" /> <span>{{ header.header }}</span></div>
+          <th class="flex items-center justify-center h-14"><p-tableHeaderCheckbox class="flex place-self-center"/></th>
+          <th class="text-2xl" *ngFor="let header of tableHeader" pSortableColumn="{{ header.field }}">
+           <div class="flex gap-2 items-center justify-center"><p-sortIcon field="{{ header.field }}" /> <span>{{ header.header }}</span></div>
           </th>
           <th></th>
         </tr>
@@ -38,8 +39,8 @@
   
       <ng-template pTemplate="body" let-rowData>
         <tr>
-          <td><p-tableCheckbox [value]="rowData"/></td>
-          <td *ngFor="let header of tableHeader">
+          <td class="flex items-center justify-center h-14"><p-tableCheckbox class="flex place-self-center" [value]="rowData"/></td>
+          <td class="text-center" *ngFor="let header of tableHeader">
             <span *ngIf="header.type !== 'file' && header.type !== 'url' " [ngClass]="getSeverity(rowData[header.field])">{{ rowData[header.field] }}</span>
             <span *ngIf="header.type !== 'file' && header.type === 'url' ">
               <a [href]="rowData[header.field]" target="_blank" class="underline">{{ rowData[header.field] }}</a>
@@ -53,5 +54,5 @@
       </ng-template>
     </p-table>
     
-    <p-menu #menu [model]="items" [popup]="true"></p-menu>
+    <p-menu #menu [model]="items" [popup]="true" styleClass="!bg-transparent"></p-menu>
   </div>

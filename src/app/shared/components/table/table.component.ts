@@ -52,10 +52,10 @@ export class TableComponent implements OnInit, OnChanges{
     this.tableHeader.forEach((header) => {
       if (header.type === 'select') {
         inputFields += `
-        <div class="inline-block w-[360px] p-4">
+        <div class="inline-block w-[360px] p-4 font-zain">
             <div class="flex flex-col w-full">
                 <label for="${header.field}" class="text-base ml-2 text-start font-semibold text-darkCol opacity-80 mb-2">${header.header}</label>
-                <select id="${header.field}" class="border rounded-md h-10 px-2 text-base appearance-none">
+                <select id="${header.field}" class="bg-transparent border-[0.1px] dark:border-[rgba(255,255,255,0.2)] rounded-md h-10 px-2 text-base appearance-none">
                 ${header.options
                   .map((option: string) => `<option value="${option}">${option}</option>`)
                   .join('')}
@@ -65,19 +65,19 @@ export class TableComponent implements OnInit, OnChanges{
         `;
       } else if (header.type === 'file') {
         inputFields += `
-        <div class="inline-block w-[360px] p-4">
+        <div class="inline-block w-[360px] p-4 font-zain">
             <div class="flex flex-col w-full">
                 <label for="${header.field}" class="text-base ml-2 text-start font-semibold text-darkCol opacity-80 mb-2">${header.header}</label>
-                <input type="file" id="${header.field}" class="add-logo flex p-1.5 border rounded-md h-10 text-base" accept="image/*">
+                <input type="file" id="${header.field}" class="bg-transparent border-[0.1px] dark:border-[rgba(255,255,255,0.2)] rounded-md h-10 px-2 text-base" accept="image/*">
             </div>
         </div>
         `;
       } else {
         inputFields += `
-        <div class="inline-block w-[360px] p-4">
+        <div class="inline-block w-[360px] p-4 font-zain">
             <div class="flex flex-col w-full">
                 <label for="${header.field}" class="text-base ml-2 text-start font-semibold text-darkCol opacity-80 mb-2">${header.header}</label>
-                <input type="${header.type}" id="${header.field}" class="border rounded-md h-10 px-2 text-base" placeholder="${header.field}">
+                <input type="${header.type}" id="${header.field}" class="bg-transparent border-[0.1px] dark:border-[rgba(255,255,255,0.2)] rounded-md h-10 px-2 text-base" placeholder="${header.field}">
             </div>
         </div>
         `;
@@ -125,15 +125,15 @@ export class TableComponent implements OnInit, OnChanges{
 
         if (header.type === 'file' && value !== 'N/A') {
             detailsHtml += `
-                <p class="swal2-input text-start"><strong>${header.field} : <img src="${value}" alt="Image" class="inline w-9 h-9" /></strong></p>
+                <p class="swal2-input text-start font-zain"><strong>${header.field} : <img src="${value}" alt="Image" class="inline w-9 h-9" /></strong></p>
             `;
         }else if(header.type === 'url'){
           detailsHtml += `
-                <p class="swal2-input text-start"><strong>${header.field} : </strong><a target="_blank" href=${value} class="text-lightRed underline">${value}</a></p>
+                <p class="swal2-input text-start font-zain"><strong>${header.field} : </strong><a target="_blank" href=${value} class="text-lightRed underline">${value}</a></p>
             `;
         } else {
             detailsHtml += `
-                <p class="swal2-input text-start"><strong>${header.field} :</strong> ${value}</p>
+                <p class="swal2-input text-start font-zain"><strong>${header.field} :</strong> ${value}</p>
             `;
         }
     });
@@ -141,7 +141,7 @@ export class TableComponent implements OnInit, OnChanges{
     Swal.fire({
         title: 'Details',
         html: detailsHtml,
-        confirmButtonColor: '#F87282',
+        confirmButtonColor: '#4baaf5',
         confirmButtonText: 'Close'
     });
 }
@@ -153,10 +153,10 @@ export class TableComponent implements OnInit, OnChanges{
       const value = tableData[header.field] || '';
       if (header.type === 'select') {
         inputFields += `
-        <div class="inline-block w-[360px] p-4">
+        <div class="inline-block w-[360px] p-4 font-zain">
           <div class="flex flex-col w-full">
             <label for="${header.field}" class="text-base ml-2 text-start font-semibold text-darkCol opacity-80 mb-2">${header.header}</label>
-            <select id="${header.field}" class="border rounded-md h-10 px-2 text-base appearance-none">
+            <select id="${header.field}" class="bg-transparent border-[0.1px] dark:border-[rgba(255,255,255,0.2)] rounded-md h-10 px-2 text-base appearance-none" >
               ${header.options
                 .map(
                   (option: string) =>
@@ -169,19 +169,19 @@ export class TableComponent implements OnInit, OnChanges{
         `;
       } else if (header.type === 'file') {
         inputFields += `
-        <div class="inline-block w-[360px] p-4">
+        <div class="inline-block w-[360px] p-4 font-zain">
             <div class="flex flex-col w-full">
                 <label for="${header.field}" class="text-base ml-2 text-start font-semibold text-darkCol opacity-80 mb-2">${header.header}</label>
-                <input type="file" id="${header.field}" class="add-logo flex p-1.5 border rounded-md h-10 text-base" accept="image/*">
+                <input type="file" id="${header.field}" class="bg-transparent border-[0.1px] dark:border-[rgba(255,255,255,0.2)] rounded-md h-10 px-2 text-base" accept="image/*">
             </div>
         </div>
         `;
       } else {
         inputFields += `
-        <div class="inline-block w-[360px] p-4">
+        <div class="inline-block w-[360px] p-4 font-zain">
           <div class="flex flex-col w-full">
             <label for="${header.field}" class="text-base ml-2 text-start font-semibold text-darkCol opacity-80 mb-2">${header.header}</label>
-            <input type="${header.type}" id="${header.field}" class="border rounded-md h-10 px-2 text-base" placeholder="${header.field}" value="${value}">
+            <input type="${header.type}" id="${header.field}" class="bg-transparent border-[0.1px] dark:border-[rgba(255,255,255,0.2)] rounded-md h-10 px-2 text-base" placeholder="${header.field}" value="${value}">
           </div>
         </div>
         `;
@@ -193,7 +193,7 @@ export class TableComponent implements OnInit, OnChanges{
       html: inputFields,
       showCancelButton: true,
       confirmButtonText: 'Save',
-      confirmButtonColor: '#F87282',
+      confirmButtonColor: '#4baaf5',
       cancelButtonText: 'Cancel',
       width: '1200px',
       preConfirm: () => {
