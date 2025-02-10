@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { TableData, TableHeader } from '../../core/models/user';
-
+// todo 1 : Phone number validation
+// todo 2 : Rating process
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
@@ -19,7 +20,7 @@ export class UsersComponent {
     { field: 'username', header: 'Username', type: 'text' },
     { field: 'password', header: 'Password', type: 'text' },
     { field: 'rating', header: 'Rating', type: 'number' },
-    { field: 'group', header: 'Group', type: 'select', options: ['Admin', 'User', 'Guest'] },
+    { field: 'permission', header: 'Permission', type: 'select', options: ['Admin', 'User'] },
     { field: 'degree', header: 'Graduated', type: 'boolean' },
   ];
 
@@ -34,7 +35,7 @@ export class UsersComponent {
       username: 'johndoe',
       password: 'password123',
       rating: 4.5,
-      group: 'Admin',
+      permission: 'Admin',
       degree: true,
     },
     {
@@ -47,7 +48,7 @@ export class UsersComponent {
       username: 'janesmith',
       password: 'password123',
       rating: 4.8,
-      group: 'User',
+      permission: 'User',
       degree: false,
     },
   ];

@@ -40,12 +40,39 @@ export class TableComponent implements OnInit, OnChanges{
             label: 'Details',
             icon: 'pi pi-info-circle',
             command: () => this.showDetails(this.selectedData)
-          }
+          },
+          {
+            label: this.selectedData.permission === 'User' ? 'Promote to Admin' : 'Demote to User',
+            icon: this.selectedData.permission === 'User' ? 'pi pi-user-plus' : 'pi pi-user-minus',
+            command: () => this.toggleUserRole()
+          }          
         ]
       }
     ];
   }
 
+  toggleUserRole() {
+    const newRole = this.selectedData.permission === 'User' ? 'Admin' : 'User';
+  
+    Swal.fire({
+      title: `Change role to ${newRole}?`,
+      text: `Are you sure you want to ${newRole === 'Admin' ? 'promote': 'demote'} this user?`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: `Yes, set to ${newRole}`,
+      cancelButtonText: 'Cancel',
+      confirmButtonColor: '#4baaf5',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.selectedData.permission = newRole;
+        Swal.fire(
+          'Updated!',
+          `User role has been changed to ${newRole}.`,
+          'success'
+        );
+      }
+    });
+  }
   addNew() {
     let inputFields = '';
     this.tableHeader.forEach((header) => {
@@ -115,8 +142,8 @@ export class TableComponent implements OnInit, OnChanges{
       }
     });
   }
-
-  showDetails(tableData: any | undefined) {
+    
+    showDetails(tableData: any | undefined) {
     if (!tableData) return;
     let detailsHtml = '';
     this.tableHeader.forEach(header => {
@@ -150,6 +177,9 @@ export class TableComponent implements OnInit, OnChanges{
     let inputFields = '';
     this.tableHeader.forEach((header) => {
       const value = tableData[header.field] || '';
+      if (header.field === 'permission') {
+        return;
+      }
       if (header.type === 'select') {
         inputFields += `
         <div class="inline-block w-[360px] p-4 font-zain">
@@ -229,6 +259,7 @@ export class TableComponent implements OnInit, OnChanges{
 
   setSelectedData(tableData: any) {
     this.selectedData = tableData;
+    this.updateMenuItems();  
   }
 
   deleteSelectedData() {

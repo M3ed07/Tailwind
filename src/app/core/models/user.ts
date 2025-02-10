@@ -8,7 +8,7 @@ export interface TableData {
     username: string;
     password: string;
     rating: number; // Assuming rating is a number (e.g., 1-5)
-    group: string;
+    permission: string;
     degree: boolean; // true if graduated, false otherwise
   }
   
