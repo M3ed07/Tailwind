@@ -289,15 +289,4 @@ export class TableComponent implements OnInit, OnChanges{
       this.dt.filterGlobal(value, 'contains');
     }
   }
-
-  getSeverity(status: string):string {
-    switch (status) {
-      case 'Active':
-        return 'border-1 px-2 border-green-500 text-green-500 rounded-full shadow-[0px_0px_4px_rgb(34,197,94,0.2)]';
-      case 'Inactive':
-        return 'border-1 px-2 border-lightRed text-lightRed rounded-full shadow-[0px_0px_4px_rgb(239,68,68,0.2)]';
-      default:
-        return '';
-    }
-  }
 }

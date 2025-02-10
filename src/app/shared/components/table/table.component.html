@@ -38,13 +38,11 @@
     <tr class="opacity-70 hover:opacity-100">
       <td class="flex items-center justify-center h-14 !border-none"><p-tableCheckbox class="flex place-self-center" [value]="rowData"/></td>
       <td class="text-center" *ngFor="let header of tableHeader">
-        <span *ngIf="header.type !== 'file' && header.type !== 'url' " [ngClass]="getSeverity(rowData[header.field])">{{ rowData[header.field] }}</span>
+        <span *ngIf="header.type !== 'file' && header.type !== 'url' ">{{ rowData[header.field] }}</span>
         <span *ngIf="header.type !== 'file' && header.type === 'url' ">
           <a [href]="rowData[header.field]" target="_blank" class="underline">{{ rowData[header.field] }}</a>
         </span>
-        <div *ngIf="header.type === 'file' ">
-          <img [src]="rowData[header.field]" class="w-9 h-9">
-        </div>
+        <div *ngIf="header.type === 'file' "><img [src]="rowData[header.field]" class="w-9 h-9"></div>
       </td>
       <td class="w-[10px]"><p-button (onClick)="setSelectedData(rowData); menu.toggle($event)" icon="pi pi-ellipsis-v"/></td>
     </tr>
