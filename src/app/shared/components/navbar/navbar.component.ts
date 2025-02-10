@@ -1,5 +1,5 @@
-import { isPlatformBrowser } from '@angular/common';
-import { Component, Inject, Input, PLATFORM_ID } from '@angular/core';
+import { Component ,Input} from '@angular/core';
+import { ThemeService } from '../../../core/services/theme/theme.service';
 
 @Component({
   selector: 'app-navbar',
@@ -7,34 +7,18 @@ import { Component, Inject, Input, PLATFORM_ID } from '@angular/core';
   styleUrl: './navbar.component.css'
 })
 export class NavbarComponent {
-  @Input() pageName: string = ''
+  @Input() title: string = ''
   currentMode: boolean = false;
-  constructor(@Inject(PLATFORM_ID) private platformId: object) {}
+
+  constructor(private themeService: ThemeService) {}
 
   ngOnInit() {
-    if (isPlatformBrowser(this.platformId)) {
-      this.updateTheme();
-    }
+    this.themeService.currentMode$.subscribe((mode) => {
+      this.currentMode = mode;
+    });
   }
-
-  updateTheme() {
-    if (isPlatformBrowser(this.platformId) && localStorage.getItem("theme") === "dark") {
-      document.documentElement.classList.add("dark");
-      this.currentMode = true;
-    }
-  }
-  
 
   toggleDarkMode() {
-    const html = document.documentElement;
-    if (html.classList.contains("dark")) {
-      html.classList.remove("dark");
-      localStorage.setItem("theme", "light");
-    } else {
-      html.classList.add("dark");
-      localStorage.setItem("theme", "dark");
-    }
-    this.currentMode = !this.currentMode;
+    this.themeService.toggleDarkMode();
   }
-
 }

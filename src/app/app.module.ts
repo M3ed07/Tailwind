@@ -30,7 +30,9 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { MessageService, ConfirmationService } from 'primeng/api';
 import { HttpClientModule, provideHttpClient, withFetch } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpErrorInterceptorService } from './shared/components/ErrorHandler/http-error-interceptor.service';
+import { ErrorTemplateComponent } from './shared/components/ErrorHandler/error-template/error-template.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -40,6 +42,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     DashboardComponent,
     UsersComponent,
     AttendanceComponent,
+    ErrorTemplateComponent,
   ],
   imports: [
     BrowserModule,
@@ -68,6 +71,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     ButtonModule
   ],
   providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptorService, multi: true },
     provideClientHydration(),
     provideClientHydration(),
     provideHttpClient(withFetch()),

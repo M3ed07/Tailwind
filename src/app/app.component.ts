@@ -1,10 +1,16 @@
 import { Component } from '@angular/core';
+import { ThemeService } from './core/services/theme/theme.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  title = 'Tailwind';
+  constructor(private themeService: ThemeService) {}
+
+  ngOnInit() {
+    // Ensure the theme is applied globally on app startup
+    this.themeService.currentMode$.subscribe();
+  }
 }

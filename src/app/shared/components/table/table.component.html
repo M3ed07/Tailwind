@@ -1,58 +1,54 @@
-<div>
-    <p-toast></p-toast>
-    <p-table
-    #dt
-    [value]="tableData"
-    [rows]="12"
-    paginator="true"
-    styleClass="p-4 grid gap-8 font-zain text-xl"
-    [globalFilterFields]="tableHeader"
-    [(selection)]="selectAll"
-    [rowHover]="true"
-    dataKey="id"
-    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-    [showCurrentPageReport]="false">
-  
-    <ng-template pTemplate="caption">
-        <div class="flex gap-4 items-center">
-            <p-toolbar styleClass="!bg-transparent flex gap-4 justify-start p-0 font-zain text-xl">
-                <p-button label="New" class="p-buttons" (onClick)="addNew()"></p-button>
-                <p-button label="Delete" class="p-buttons" [disabled]="!selectAll.length" (onClick)="deleteSelectedData()"></p-button>
-            </p-toolbar>
-            <span class="p-buttons gap-2 w-96">
-                <i class="pi pi-search"></i>
-                <input class="outline-none w-full bg-transparent text-darkBg dark:text-lightBg text-xl" type="text" (input)="filterGlobal($event)" placeholder="Search..."/>
-            </span>
-        </div>
-    </ng-template>
-  
-      <ng-template pTemplate="header">
-        <tr>
-          <th class="flex items-center justify-center h-14"><p-tableHeaderCheckbox class="flex place-self-center"/></th>
-          <th class="text-2xl" *ngFor="let header of tableHeader" pSortableColumn="{{ header.field }}">
-           <div class="flex gap-2 items-center justify-center"><p-sortIcon field="{{ header.field }}" /> <span>{{ header.header }}</span></div>
-          </th>
-          <th></th>
-        </tr>
-      </ng-template>
-      
-  
-      <ng-template pTemplate="body" let-rowData>
-        <tr>
-          <td class="flex items-center justify-center h-14"><p-tableCheckbox class="flex place-self-center" [value]="rowData"/></td>
-          <td class="text-center" *ngFor="let header of tableHeader">
-            <span *ngIf="header.type !== 'file' && header.type !== 'url' " [ngClass]="getSeverity(rowData[header.field])">{{ rowData[header.field] }}</span>
-            <span *ngIf="header.type !== 'file' && header.type === 'url' ">
-              <a [href]="rowData[header.field]" target="_blank" class="underline">{{ rowData[header.field] }}</a>
-            </span>
-            <div *ngIf="header.type === 'file' ">
-              <img [src]="rowData[header.field]" class="w-9 h-9">
-            </div>
-          </td>
-          <td class="w-[10px]"><p-button (onClick)="setSelectedData(rowData); menu.toggle($event)" icon="pi pi-ellipsis-v"/></td>
-        </tr>
-      </ng-template>
-    </p-table>
-    
-    <p-menu #menu [model]="items" [popup]="true" styleClass="!bg-transparent"></p-menu>
+<div class="container py-4 flex flex-col gap-2">
+  <div class="flex justify-between items-center">
+    <p-toolbar styleClass="!bg-transparent flex gap-4 justify-start p-0 font-zain text-xl">
+      <p-button label="New" class="p-buttons" (onClick)="addNew()"></p-button>
+      <p-button label="Delete" class="p-buttons" [disabled]="!selectAll.length" (onClick)="deleteSelectedData()"></p-button>
+    </p-toolbar>
+    <span class="p-buttons gap-3 w-96">
+      <i class="pi pi-search"></i>
+      <input class="outline-none w-full bg-transparent text-darkBg dark:text-lightBg text-xl" type="text" (input)="filterGlobal($event)" placeholder="Search..."/>
+    </span>
   </div>
+    
+  <p-toast></p-toast>
+  <p-table
+  #dt
+  [value]="tableData"
+  [rows]="12"
+  paginator="true"
+  styleClass="grid gap-8 font-zain text-xl"
+  [globalFilterFields]="tableHeader"
+  [(selection)]="selectAll"
+  [rowHover]="true"
+  dataKey="id"
+  currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+  [showCurrentPageReport]="false">
+  <!-- * Table Header -->
+  <ng-template pTemplate="header">
+    <tr class="dark:!bg-lightBg !bg-darkBg !bg-opacity-10 dark:!bg-opacity-10">
+      <th class="flex items-center justify-center h-14 !border-none"><p-tableHeaderCheckbox class="flex place-self-center"/></th>
+      <th class="text-2xl" *ngFor="let header of tableHeader" pSortableColumn="{{ header.field }}">
+        <div class="flex gap-2 items-center justify-center"><p-sortIcon field="{{ header.field }}" /> <span>{{ header.header }}</span></div>
+      </th>
+      <th></th>
+    </tr>
+  </ng-template>
+  <!-- * Table Data -->
+  <ng-template pTemplate="body" let-rowData>
+    <tr class="opacity-70 hover:opacity-100">
+      <td class="flex items-center justify-center h-14 !border-none"><p-tableCheckbox class="flex place-self-center" [value]="rowData"/></td>
+      <td class="text-center" *ngFor="let header of tableHeader">
+        <span *ngIf="header.type !== 'file' && header.type !== 'url' " [ngClass]="getSeverity(rowData[header.field])">{{ rowData[header.field] }}</span>
+        <span *ngIf="header.type !== 'file' && header.type === 'url' ">
+          <a [href]="rowData[header.field]" target="_blank" class="underline">{{ rowData[header.field] }}</a>
+        </span>
+        <div *ngIf="header.type === 'file' ">
+          <img [src]="rowData[header.field]" class="w-9 h-9">
+        </div>
+      </td>
+      <td class="w-[10px]"><p-button (onClick)="setSelectedData(rowData); menu.toggle($event)" icon="pi pi-ellipsis-v"/></td>
+    </tr>
+  </ng-template>
+</p-table>
+<p-menu #menu [model]="items" [popup]="true" styleClass="!bg-transparent"></p-menu>
+</div>

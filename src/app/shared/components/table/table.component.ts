@@ -16,7 +16,6 @@ export class TableComponent implements OnInit, OnChanges{
   items: MenuItem[] | undefined;
   @ViewChild('dt') dt: Table | undefined;
 
-
   ngOnInit() {
     this.updateMenuItems();
   }

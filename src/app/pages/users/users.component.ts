@@ -7,7 +7,8 @@ import { TableData, TableHeader } from '../../core/models/user';
   styleUrl: './users.component.css'
 })
 export class UsersComponent {
-  pageName = 'Users';
+  title = 'User Management';
+  description = 'Manage Syrian Youth Baghdad Gathering members and admins. Add, edit, delete users, and assign administrative roles.';  
 
   tableHeader: TableHeader[] = [
     { field: 'fullName', header: 'Full Name', type: 'text' },

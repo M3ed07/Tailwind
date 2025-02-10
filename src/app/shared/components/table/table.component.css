@@ -6,7 +6,7 @@
 }
 
 .p-buttons{
-    @apply h-8 font-zain text-2xl px-2 rounded-lg flex items-center justify-center border-[0.1px] dark:border-[rgba(255,255,255,0.2)] hover:bg-darkText hover:bg-opacity-10 duration-100 ease-in-out cursor-pointer;
+    @apply h-10 font-zain text-2xl px-3 rounded-lg flex items-center justify-center border-[0.1px] dark:border-[rgba(255,255,255,0.2)] hover:bg-darkText hover:bg-opacity-10 duration-100 ease-in-out cursor-pointer;
   }
 ::ng-deep .p-datatable-header{
     @apply !bg-transparent p-0
@@ -15,8 +15,9 @@
   ::ng-deep .p-element{
    @apply bg-transparent text-darkBg dark:text-lightBg
   }
-  th ,td ,tr{
-    @apply bg-transparent text-darkBg dark:text-lightBg p-0
+  th, td, tr {
+    @apply bg-transparent text-darkBg dark:text-lightBg p-0 dark:border-[rgba(255,255,255,0.1)];
+    border-bottom: 0.1px solid;
   }
   ::ng-deep .p-menu-list{
     @apply border-[0.1px] dark:border-[rgba(255,255,255,0.2)] dark:bg-darkBg bg-lightBg rounded-lg
