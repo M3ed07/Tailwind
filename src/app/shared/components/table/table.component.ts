@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, Input ,ViewChild } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import Swal from 'sweetalert2';
 import { Table } from 'primeng/table';
@@ -62,6 +62,17 @@ export class TableComponent{
       }
     ];
   }
+  setSelectedData(tableData: any) {
+    this.selectedData = tableData;
+    this.updateMenuItems();  
+  }
+  filterGlobal(event: Event) {
+    const inputElement = event.target as HTMLInputElement;
+    const value = inputElement.value;
+    if (this.dt) {
+      this.dt.filterGlobal(value, 'contains');
+    }
+  }
   toggleUserRole() {
     const newRole = this.selectedData.permission === 'User' ? 'Admin' : 'User';
   
@@ -84,10 +95,6 @@ export class TableComponent{
       }
     });
   }
-  setSelectedData(tableData: any) {
-    this.selectedData = tableData;
-    this.updateMenuItems();  
-  }
   deleteSelectedData() {
     Swal.fire({
       title: 'Are you sure?',
@@ -106,12 +113,5 @@ export class TableComponent{
         Swal.fire('Deleted!', 'Selected Data have been deleted.', 'success');
       }
     });
-  }
-  filterGlobal(event: Event) {
-    const inputElement = event.target as HTMLInputElement;
-    const value = inputElement.value;
-    if (this.dt) {
-      this.dt.filterGlobal(value, 'contains');
-    }
   }
 }
