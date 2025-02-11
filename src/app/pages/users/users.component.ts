@@ -21,7 +21,6 @@ export class UsersComponent {
     { field: 'password', header: 'Password', type: 'text' },
     { field: 'rating', header: 'Rating', type: 'number' },
     { field: 'permission', header: 'Permission', type: 'select', options: ['Admin', 'User'] },
-    { field: 'degree', header: 'Graduated', type: 'boolean' },
   ];
 
   tableData: TableData[] = [
@@ -36,7 +35,6 @@ export class UsersComponent {
       password: 'password123',
       rating: 4.5,
       permission: 'Admin',
-      degree: true,
     },
     {
       id: 2,
@@ -49,7 +47,6 @@ export class UsersComponent {
       password: 'password123',
       rating: 4.8,
       permission: 'User',
-      degree: false,
     },
   ];
 }

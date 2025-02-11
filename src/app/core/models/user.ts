@@ -9,7 +9,6 @@ export interface TableData {
     password: string;
     rating: number; // Assuming rating is a number (e.g., 1-5)
     permission: string;
-    degree: boolean; // true if graduated, false otherwise
   }
   
   export interface TableHeader {

@@ -177,15 +177,12 @@ export class TableComponent implements OnInit, OnChanges{
     let inputFields = '';
     this.tableHeader.forEach((header) => {
       const value = tableData[header.field] || '';
-      if (header.field === 'permission') {
-        return;
-      }
       if (header.type === 'select') {
         inputFields += `
         <div class="inline-block w-[360px] p-4 font-zain">
           <div class="flex flex-col w-full">
-            <label for="${header.field}" class="text-base ml-2 text-start font-semibold text-darkCol opacity-80 mb-2">${header.header}</label>
-            <select id="${header.field}" class="bg-transparent border-[0.1px] dark:border-[rgba(255,255,255,0.2)] rounded-md h-10 px-2 text-base appearance-none" >
+            <label for="${header.field}" class="text-base ml-2 text-start font-semibold text-darkCol opacity-80 mb-2 ${header.field == 'permission' && 'hidden'}">${header.header}</label>
+            <select id="${header.field}" class="bg-transparent border-[0.1px] ${header.field == 'permission' && 'hidden'}" dark:border-[rgba(255,255,255,0.2)] rounded-md h-10 px-2 text-base appearance-none" >
               ${header.options
                 .map(
                   (option: string) =>

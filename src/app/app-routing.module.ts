@@ -8,6 +8,7 @@ import { ErrorTemplateComponent } from './shared/components/ErrorHandler/error-t
 
 const routes: Routes = [
   { path: '', component: LayoutComponent ,children:[
+    { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
     { path: 'dashboard', component: DashboardComponent },
     { path: 'users', component: UsersComponent },
     { path: 'attendance', component: AttendanceComponent },
