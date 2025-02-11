@@ -8,24 +8,36 @@ import { Table } from 'primeng/table';
   templateUrl: './table.component.html',
   styleUrl: './table.component.css'
 })
-export class TableComponent implements OnInit, OnChanges{
+export class TableComponent{
   @Input() tableHeader: any[] = [];
   @Input() tableData: any[] = [];
   selectedData: any = {};
   selectAll: any[] = [];
   items: MenuItem[] | undefined;
   @ViewChild('dt') dt: Table | undefined;
+  // Dialog State
+  dialogVisible: boolean = false;
+  dialogTitle: string = '';
+  dialogMode: 'add' | 'edit' | 'details' = 'add';
+  formData: any = {}
 
-  ngOnInit() {
-    this.updateMenuItems();
+  openDialog(mode: 'add' | 'edit' | 'details', data?: any) {
+    this.dialogMode = mode;
+    this.dialogTitle = mode === 'add' ? 'Add New User' : mode === 'edit' ? 'Edit User' : 'User Details';
+    this.formData = data ? { ...data } : {};
+    this.dialogVisible = true;
   }
-
-  ngOnChanges(changes: SimpleChanges) {
-    if (changes['title'] || changes['tableHeaders'] || changes['tableData']) {
-      this.updateMenuItems();
+  saveData(newData: any) {
+    if (this.dialogMode === 'add') {
+      const newId = this.tableData.length > 0 ? Math.max(...this.tableData.map(d => d.id)) + 1 : 1;
+      this.tableData = [...this.tableData, { id: newId, ...newData }];
+    } else if (this.dialogMode === 'edit') {
+      const index = this.tableData.findIndex(d => d.id === newData.id);
+      if (index !== -1) {
+        this.tableData[index] = newData;
+      }
     }
   }
-
   updateMenuItems() {
     this.items = [
       {
@@ -34,12 +46,12 @@ export class TableComponent implements OnInit, OnChanges{
           {
             label: 'Edit',
             icon: 'pi pi-pencil',
-            command: () => this.editData(this.selectedData)
+            command: () => this.openDialog('edit', this.selectedData)
           },
           {
             label: 'Details',
             icon: 'pi pi-info-circle',
-            command: () => this.showDetails(this.selectedData)
+            command: () => this.openDialog('details', this.selectedData)
           },
           {
             label: this.selectedData.permission === 'User' ? 'Promote to Admin' : 'Demote to User',
@@ -50,7 +62,6 @@ export class TableComponent implements OnInit, OnChanges{
       }
     ];
   }
-
   toggleUserRole() {
     const newRole = this.selectedData.permission === 'User' ? 'Admin' : 'User';
   
@@ -73,192 +84,10 @@ export class TableComponent implements OnInit, OnChanges{
       }
     });
   }
-  addNew() {
-    let inputFields = '';
-    this.tableHeader.forEach((header) => {
-      if (header.type === 'select') {
-        inputFields += `
-        <div class="inline-block w-[360px] p-4 font-zain">
-            <div class="flex flex-col w-full">
-                <label for="${header.field}" class="text-base ml-2 text-start font-semibold text-darkCol opacity-80 mb-2">${header.header}</label>
-                <select id="${header.field}" class="bg-transparent border-[0.1px] dark:border-[rgba(255,255,255,0.2)] rounded-md h-10 px-2 text-base appearance-none">
-                ${header.options
-                  .map((option: string) => `<option value="${option}">${option}</option>`)
-                  .join('')}
-                </select>
-            </div>
-        </div>
-        `;
-      } else if (header.type === 'file') {
-        inputFields += `
-        <div class="inline-block w-[360px] p-4 font-zain">
-            <div class="flex flex-col w-full">
-                <label for="${header.field}" class="text-base ml-2 text-start font-semibold text-darkCol opacity-80 mb-2">${header.header}</label>
-                <input type="file" id="${header.field}" class="bg-transparent border-[0.1px] dark:border-[rgba(255,255,255,0.2)] rounded-md h-10 px-2 text-base" accept="image/*">
-            </div>
-        </div>
-        `;
-      } else {
-        inputFields += `
-        <div class="inline-block w-[360px] p-4 font-zain">
-            <div class="flex flex-col w-full">
-                <label for="${header.field}" class="text-base ml-2 text-start font-semibold text-darkCol opacity-80 mb-2">${header.header}</label>
-                <input type="${header.type}" id="${header.field}" class="bg-transparent border-[0.1px] dark:border-[rgba(255,255,255,0.2)] rounded-md h-10 px-2 text-base" placeholder="${header.field}">
-            </div>
-        </div>
-        `;
-      }
-    });
-  
-    Swal.fire({
-      title: `Add New`,
-      html: inputFields,
-      showCancelButton: true,
-      confirmButtonText: 'Add',
-      confirmButtonColor: '#4baaf5',
-      cancelButtonText: 'Cancel',
-      width: '1200px',
-      preConfirm: () => {
-        const newData: any = {};
-        // Get the values from the input fields
-        this.tableHeader.forEach((header) => {
-          if (header.type === 'file') {
-            const fileInput = document.getElementById(header.field) as HTMLInputElement;
-            const file = fileInput?.files?.[0];
-            newData[header.field] = file ? URL.createObjectURL(file) : 'N/A';
-          } else {
-            const inputElement = (document.getElementById(header.field) as HTMLInputElement).value;
-            newData[header.field] = inputElement || 'N/A';
-          }
-        });
-        return newData;
-      },
-    }).then((result) => {
-      if (result.isConfirmed && result.value) {
-        const newId = this.tableData.length > 0 ? Math.max(...this.tableData.map(d => d.id)) + 1 : 1;
-        this.tableData = [...this.tableData, { id: newId, ...result.value }];
-    
-        Swal.fire('Added!', 'New data has been added.', 'success');
-      }
-    });
-  }
-    
-    showDetails(tableData: any | undefined) {
-    if (!tableData) return;
-    let detailsHtml = '';
-    this.tableHeader.forEach(header => {
-        const value = tableData[header.field] || 'N/A';
-
-        if (header.type === 'file' && value !== 'N/A') {
-            detailsHtml += `
-                <p class="swal2-input text-start font-zain"><strong>${header.field} : <img src="${value}" alt="Image" class="inline w-9 h-9" /></strong></p>
-            `;
-        }else if(header.type === 'url'){
-          detailsHtml += `
-                <p class="swal2-input text-start font-zain"><strong>${header.field} : </strong><a target="_blank" href=${value} class="text-lightRed underline">${value}</a></p>
-            `;
-        } else {
-            detailsHtml += `
-                <p class="swal2-input text-start font-zain"><strong>${header.field} :</strong> ${value}</p>
-            `;
-        }
-    });
-
-    Swal.fire({
-        title: 'Details',
-        html: detailsHtml,
-        confirmButtonColor: '#4baaf5',
-        confirmButtonText: 'Close'
-    });
-}
-
-  editData(tableData: any | undefined) {
-    if (!tableData) return;
-    let inputFields = '';
-    this.tableHeader.forEach((header) => {
-      const value = tableData[header.field] || '';
-      if (header.type === 'select') {
-        inputFields += `
-        <div class="inline-block w-[360px] p-4 font-zain">
-          <div class="flex flex-col w-full">
-            <label for="${header.field}" class="text-base ml-2 text-start font-semibold text-darkCol opacity-80 mb-2 ${header.field == 'permission' && 'hidden'}">${header.header}</label>
-            <select id="${header.field}" class="bg-transparent border-[0.1px] ${header.field == 'permission' && 'hidden'}" dark:border-[rgba(255,255,255,0.2)] rounded-md h-10 px-2 text-base appearance-none" >
-              ${header.options
-                .map(
-                  (option: string) =>
-                    `<option value="${option}" ${value === option ? 'selected' : ''}>${option}</option>`
-                )
-                .join('')}
-            </select>
-          </div>
-        </div>
-        `;
-      } else if (header.type === 'file') {
-        inputFields += `
-        <div class="inline-block w-[360px] p-4 font-zain">
-            <div class="flex flex-col w-full">
-                <label for="${header.field}" class="text-base ml-2 text-start font-semibold text-darkCol opacity-80 mb-2">${header.header}</label>
-                <input type="file" id="${header.field}" class="bg-transparent border-[0.1px] dark:border-[rgba(255,255,255,0.2)] rounded-md h-10 px-2 text-base" accept="image/*">
-            </div>
-        </div>
-        `;
-      } else {
-        inputFields += `
-        <div class="inline-block w-[360px] p-4 font-zain">
-          <div class="flex flex-col w-full">
-            <label for="${header.field}" class="text-base ml-2 text-start font-semibold text-darkCol opacity-80 mb-2">${header.header}</label>
-            <input type="${header.type}" id="${header.field}" class="bg-transparent border-[0.1px] dark:border-[rgba(255,255,255,0.2)] rounded-md h-10 px-2 text-base" placeholder="${header.field}" value="${value}">
-          </div>
-        </div>
-        `;
-      }
-    });
-  
-    Swal.fire({
-      title: 'Edit Data',
-      html: inputFields,
-      showCancelButton: true,
-      confirmButtonText: 'Save',
-      confirmButtonColor: '#4baaf5',
-      cancelButtonText: 'Cancel',
-      width: '1200px',
-      preConfirm: () => {
-        const updatedData: any = {};
-        this.tableHeader.forEach((header) => {
-          if (header.type === 'file') {
-            const fileInput = document.getElementById(header.field) as HTMLInputElement;
-            const file = fileInput?.files?.[0];
-            updatedData[header.field] = file ? URL.createObjectURL(file) : tableData[header.field];
-          } else {
-            const inputElement = (document.getElementById(header.field) as HTMLInputElement).value;
-            updatedData[header.field] = inputElement || 'N/A';
-          }
-        });
-        return updatedData;
-      },
-    }).then((result) => {
-      if (result.isConfirmed && result.value) {
-        this.saveData(result.value, tableData.id);
-        Swal.fire('Updated!', 'Data has been updated.', 'success');
-      }
-    });
-  }
-
-
-  saveData(updatedData: any, id: number) {
-    const index = this.tableData.findIndex((c) => c.id === id);
-    if (index !== -1) {
-      this.tableData[index] = { id, ...updatedData };
-      this.tableData = [...this.tableData];
-    }
-    this.selectedData = undefined;
-  }
-
   setSelectedData(tableData: any) {
     this.selectedData = tableData;
     this.updateMenuItems();  
   }
-
   deleteSelectedData() {
     Swal.fire({
       title: 'Are you sure?',
@@ -278,7 +107,6 @@ export class TableComponent implements OnInit, OnChanges{
       }
     });
   }
-
   filterGlobal(event: Event) {
     const inputElement = event.target as HTMLInputElement;
     const value = inputElement.value;

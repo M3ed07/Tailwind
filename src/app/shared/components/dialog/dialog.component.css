@@ -1,0 +1,22 @@
+::ng-deep .p-dialog .p-button{
+    @apply h-10 font-zain text-2xl px-3 rounded-lg flex items-center justify-center border-[0.1px] dark:border-[rgba(255,255,255,0.2)] hover:bg-darkText hover:bg-opacity-10 duration-100 ease-in-out cursor-pointer;
+}
+
+::ng-deep .p-dialog {
+    @apply border-[0.1px] dark:border-[rgba(255,255,255,0.2)] dark:bg-darkBg bg-lightBg min-w-96 min-h-96 w-[600px];
+}
+::ng-deep .p-dialog-footer,
+::ng-deep .p-dialog-content,
+::ng-deep .p-dialog-header,
+input,select {
+    @apply !bg-transparent flex gap-2  text-darkBg dark:text-lightBg;
+}
+input,select{
+    @apply border-[0.1px] dark:border-[rgba(255,255,255,0.2)] px-2;
+}
+label{
+    @apply font-bold text-base;
+}
+.ng-tns-c662934324-2 .ng-star-inserted{
+    @apply w-full flex flex-wrap gap-2
+}

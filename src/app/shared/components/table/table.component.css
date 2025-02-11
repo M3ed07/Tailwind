@@ -22,7 +22,3 @@
   ::ng-deep .p-menu-list{
     @apply border-[0.1px] dark:border-[rgba(255,255,255,0.2)] dark:bg-darkBg bg-lightBg rounded-lg
   }
-
-  ::ng-deep .swal2-popup{
-   @apply border-[0.1px] dark:border-[rgba(255,255,255,0.2)] dark:bg-darkBg bg-lightBg text-darkBg dark:text-lightBg
-  }

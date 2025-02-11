@@ -33,6 +33,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpErrorInterceptorService } from './shared/components/ErrorHandler/http-error-interceptor.service';
 import { ErrorTemplateComponent } from './shared/components/ErrorHandler/error-template/error-template.component';
+import { DialogComponent } from './shared/components/dialog/dialog.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -43,6 +44,7 @@ import { ErrorTemplateComponent } from './shared/components/ErrorHandler/error-t
     UsersComponent,
     AttendanceComponent,
     ErrorTemplateComponent,
+    DialogComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,7 +1,7 @@
 <div class="container py-4 flex flex-col gap-2">
   <div class="flex justify-between items-center">
     <p-toolbar styleClass="!bg-transparent flex gap-4 justify-start p-0 font-zain text-xl">
-      <p-button label="New" class="p-buttons" (onClick)="addNew()"></p-button>
+      <p-button label="New" class="p-buttons" (onClick)="openDialog('add')"></p-button>
       <p-button label="Delete" class="p-buttons" [disabled]="!selectAll.length" (onClick)="deleteSelectedData()"></p-button>
     </p-toolbar>
     <span class="p-buttons gap-3 w-96">
@@ -50,3 +50,13 @@
 </p-table>
 <p-menu #menu [model]="items" [popup]="true" styleClass="!bg-transparent"></p-menu>
 </div>
+
+<app-dialog 
+  [visible]="dialogVisible" 
+  [title]="dialogTitle" 
+  [mode]="dialogMode" 
+  [tableHeader]="tableHeader" 
+  [formData]="formData"
+  (onClose)="dialogVisible = false" 
+  (onSave)="saveData($event)">
+</app-dialog>

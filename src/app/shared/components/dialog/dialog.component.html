@@ -1,0 +1,22 @@
+<p-dialog [(visible)]="visible" [modal]="true" [closable]="false" [header]="title">
+    <div *ngIf="mode !== 'details'">
+        <ng-container *ngFor="let header of tableHeader">
+                <label>{{ header.header }}</label>
+                <input *ngIf="header.type !== 'select'" [(ngModel)]="formData[header.field]" [type]="header.type" class="p-inputtext p-component">
+                <select *ngIf="header.type === 'select'" [(ngModel)]="formData[header.field]" class="p-inputtext p-component">
+                    <option *ngFor="let option of header.options" [value]="option">{{ option }}</option>
+                </select>
+        </ng-container>
+    </div>
+    
+    <div *ngIf="mode === 'details'">
+        <div *ngFor="let header of tableHeader">
+            <p><strong>{{ header.header }}:</strong> {{ formData[header.field] || 'N/A' }}</p>
+        </div>
+    </div>
+    
+    <ng-template pTemplate="footer" class="dialogButtons">
+        <button *ngIf="mode !== 'details'" pButton label="Save" (click)="handleSave()"></button>
+        <button pButton label="Close" (click)="closeDialog()"></button>
+    </ng-template>
+</p-dialog>
